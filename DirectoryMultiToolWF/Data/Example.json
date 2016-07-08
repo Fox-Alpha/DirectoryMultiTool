@@ -17,9 +17,9 @@
 	"Alias": {
 		"Dirk":"DB",
 		"Yvonne":"YW",
-		"Sando":"SP"
+		"Sandro":"SP",
 		"Oldesloe":"OD",
-		"Workstation":WS,
+		"Workstation":"WS",
 		"Tablet":"TB",
 		"Handy":"HY",
 		"Docer":"DC",
@@ -29,10 +29,10 @@
 	/* Trennzeichen zwischen den Namensteilen*/
 	"Seperator": [
 		"-"
-	]
+	],
 
 	/* Verzeichnis in dem der Baum angelegt werden soll*/
-	"RootDir":"c:\\temp\\DirectoryMultiTool\\",
+	"RootDirectory":"c:\\temp\\DirectoryMultiTool\\",
 
 	/* Dateien die in jedes erzeugte Zielverzeichnis kopiert werden sollen */
 	"Vorlagen": {
@@ -52,4 +52,17 @@
 
 	/* Schreiben einer Logdatei, Pfad kann relativ zum RootDir sein '\\' oder zur Application .\\Data\\*/
 	"Log":"\\Log\\MultiDirectoryTool.Log.txt"
+}
+
+
+{
+	"Names":["OD-DB-WS-001","OD-DB-TB-001","OD-DB-TB-002","OD-DB-HY-001","OD-DB-VS-001","OD-DB-DC-001","OD-YW-WS-001","OD-YW-TB-001","OD-YW-HY-001","OD-SP-WS-001"],
+	"Seperator":["-"],
+	"Alias":{"Dirk":"DB","Yvonne":"YW","Sandro":"SP","Oldesloe":"OD","Workstation":"WS","Tablet":"TB","Handy":"HY","Docer":"DC","Virtual":"VS"},
+	"Filter":null,
+	"Files":null,
+	"rootDirectory":"c:\\temp\\DirectoryMultiTool\\",
+	"Silent":false,
+	"Log":"\\Log\\MultiDirectoryTool.Log.txt",
+	"Source":null
 }
