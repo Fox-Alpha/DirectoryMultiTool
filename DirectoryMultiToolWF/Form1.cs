@@ -25,14 +25,26 @@ namespace DirectoryMultiToolWF
 
 		private void Form1_Load (object sender, EventArgs e)
 		{
-			JsonSerializer serializer = new JsonSerializer ();
-			string json;
+			//	Setzen der Serializer Settings
+			JsonSerializerSettings jsonSerializerSettings;
 
-			using (StreamReader sw = new StreamReader (@"data\example.json"))
-				using (JsonReader reader = new JsonTextReader (sw))
+			jsonSerializerSettings = new JsonSerializerSettings ();
+			jsonSerializerSettings.Formatting = Formatting.Indented;
+			jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+			jsonSerializerSettings.NullValueHandling = NullValueHandling.Include;
+			jsonSerializerSettings.StringEscapeHandling = StringEscapeHandling.EscapeNonAscii;
+			jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+
+			JsonSerializer serializer = JsonSerializer.CreateDefault (jsonSerializerSettings);
+
+			//StreamWriter sw = new StreamWriter (@"data\exampleOut.json");
+            //JsonWriter writer = new JsonTextWriter (sw);
+
+			using (StreamReader sr = new StreamReader (@"data\example.json"))
+				using (JsonReader reader = new JsonTextReader (sr))
 				{
 					dt = serializer.Deserialize<DirectoryTask> (reader);
-					string output = JsonConvert.SerializeObject (dt);
+				string output = JsonConvert.SerializeObject (dt, jsonSerializerSettings);
 
 					Debug.WriteLine(output);
 			
