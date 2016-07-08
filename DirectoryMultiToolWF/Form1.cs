@@ -16,9 +16,29 @@ namespace DirectoryMultiToolWF
 {
 	public partial class Form1 : Form
 	{
+		DirectoryTask dt;
+
 		public Form1 ()
 		{
 			InitializeComponent ();
+		}
+
+		private void Form1_Load (object sender, EventArgs e)
+		{
+			JsonSerializer serializer = new JsonSerializer ();
+			string json;
+
+			using (StreamReader sw = new StreamReader (@"data\example.json"))
+				using (JsonReader reader = new JsonTextReader (sw))
+				{
+					dt = serializer.Deserialize<DirectoryTask> (reader);
+					string output = JsonConvert.SerializeObject (dt);
+
+					Debug.WriteLine(output);
+			
+					// {"ExpiryDate":new Date(1230375600000),"Price":0}
+			}
+			//string output = JsonConvert.DeserializeObject<DirectoryTask> ();
 		}
 	}
 
@@ -27,36 +47,47 @@ namespace DirectoryMultiToolWF
 	public class DirectoryTask
 	{
 		/* Die Datei die als Konfiguration geladen werden soll */
-		string jsonFile	{ get; set;	}
+		string jsonFile { get; set; }
+		JsonSerializerSettings jsonSerializerSettings;
 
-		[JsonProperty(PropertyName ="Names", Required = Required.Always)]
+		[JsonProperty (PropertyName = "Names", Required = Required.Always)] 
 		List<string> targetNames;
 		[JsonProperty(PropertyName = "Seperator", DefaultValueHandling = DefaultValueHandling.Populate)]
 		List<string> nameSeperator;
-		[JsonProperty(Required = Required.AllowNull)]
+		[JsonProperty(Required = Required.AllowNull, PropertyName = "Alias")]
 		Dictionary<string, string> nameAliases;
 		[JsonProperty(Required = Required.Always)]
 		string rootDirectory { get; set; }
-		[JsonProperty(Required = Required.Default)]
+		[JsonProperty(Required = Required.Default, PropertyName = "Silent")]
 		bool silentTask 
 		{ get; set; }
-		[JsonProperty(Required = Required.Default)]
+		[JsonProperty(Required = Required.Default, PropertyName = "Log")]
 		string logFile
 		{ get; set; }
 		// Templates
-		[JsonProperty (Required = Required.Default)]
+		[JsonProperty (Required = Required.Default, PropertyName = "Source")]
 		string tplDirectory
 		{ get; set; }
-		[JsonProperty(Required = Required.Default)]
+		[JsonProperty(Required = Required.Default, PropertyName = "Filter")]
 		List<string> tplFilter;
-		[JsonProperty(Required = Required.Default)]
+		[JsonProperty(Required = Required.Default, PropertyName = "Files")]
 		List<string> tplFiles;
 
 		public DirectoryTask(string _jsonFile)
 		{
-			if (File.Exists(jsonFile))
+			if (File.Exists(_jsonFile))
 			{
-				//	Einlesen der Konfiguration
+				jsonFile = _jsonFile;
+
+				//	Setzen der Serializer Settings
+				jsonSerializerSettings = new JsonSerializerSettings ();
+				jsonSerializerSettings.Formatting = Formatting.Indented;
+				jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+				jsonSerializerSettings.NullValueHandling = NullValueHandling.Include;
+				jsonSerializerSettings.StringEscapeHandling = StringEscapeHandling.EscapeNonAscii;
+				jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+
+                //JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(jsonSerializerSettings);
 			}
 		}
 	}
