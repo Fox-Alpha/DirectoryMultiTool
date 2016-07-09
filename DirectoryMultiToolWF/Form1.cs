@@ -19,13 +19,31 @@ namespace DirectoryMultiToolWF
 		DirectoryTask dt;
 
 		bool writeLog = false;
+		string jsonKonfig = "";
 
 		public Form1 ()
 		{
-			InitializeComponent ();
+			string [] cmdLine;
+
+			if ((cmdLine = Environment.GetCommandLineArgs()).Length > 1)
+			{
+				
+				ReadJSonKonfiguration (cmdLine[1]);
+
+				if (!dt.silentTask)
+				{
+					InitializeComponent ();
+				}
+				else
+					Debug.WriteLine ("Keine GUI Anzeige");
+			}
 		}
 
 		private void Form1_Load (object sender, EventArgs e)
+		{
+		}
+
+		private void ReadJSonKonfiguration(string JSonFile)
 		{
 			//	Setzen der Serializer Settings
 			JsonSerializerSettings jsonSerializerSettings;
@@ -43,7 +61,7 @@ namespace DirectoryMultiToolWF
 			//JsonWriter writer = new JsonTextWriter (sw);
 
 			using (StreamReader sr = new StreamReader (@"data\example.json"))
-			{ 
+			{
 				using (JsonReader reader = new JsonTextReader (sr))
 				{
 					dt = serializer.Deserialize<DirectoryTask> (reader);
@@ -52,14 +70,13 @@ namespace DirectoryMultiToolWF
 					Debug.WriteLine (output);
 #endif
 					if (string.IsNullOrWhiteSpace (dt.logFile))
-		            {
+					{
 						if (!File.Exists (dt.logFile))
 							File.OpenWrite (dt.logFile).Close ();
 						writeLog = true;
 					}
 				}
 			}
-
 		}
 
 		private void beendenToolStripMenuItem_Click (object sender, EventArgs e)
