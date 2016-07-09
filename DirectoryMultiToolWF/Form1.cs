@@ -18,6 +18,8 @@ namespace DirectoryMultiToolWF
 	{
 		DirectoryTask dt;
 
+		bool writeLog = false;
+
 		public Form1 ()
 		{
 			InitializeComponent ();
@@ -38,19 +40,26 @@ namespace DirectoryMultiToolWF
 			JsonSerializer serializer = JsonSerializer.CreateDefault (jsonSerializerSettings);
 
 			//StreamWriter sw = new StreamWriter (@"data\exampleOut.json");
-            //JsonWriter writer = new JsonTextWriter (sw);
+			//JsonWriter writer = new JsonTextWriter (sw);
 
 			using (StreamReader sr = new StreamReader (@"data\example.json"))
+			{ 
 				using (JsonReader reader = new JsonTextReader (sr))
 				{
 					dt = serializer.Deserialize<DirectoryTask> (reader);
-				string output = JsonConvert.SerializeObject (dt, jsonSerializerSettings);
-
-					Debug.WriteLine(output);
-			
-					// {"ExpiryDate":new Date(1230375600000),"Price":0}
+#if (DEBUG)
+					string output = JsonConvert.SerializeObject (dt, jsonSerializerSettings);
+					Debug.WriteLine (output);
+#endif
+					if (string.IsNullOrWhiteSpace (dt.logFile))
+		            {
+						if (!File.Exists (dt.logFile))
+							File.OpenWrite (dt.logFile).Close ();
+						writeLog = true;
+					}
+				}
 			}
-			//string output = JsonConvert.DeserializeObject<DirectoryTask> ();
+
 		}
 
 		private void beendenToolStripMenuItem_Click (object sender, EventArgs e)
@@ -64,26 +73,26 @@ namespace DirectoryMultiToolWF
 	public class DirectoryTask
 	{
 		/* Die Datei die als Konfiguration geladen werden soll */
-		string jsonFile { get; set; }
+		public string jsonFile { get; set; }
 		JsonSerializerSettings jsonSerializerSettings;
 
 		[JsonProperty (PropertyName = "Names", Required = Required.Always)] 
-		List<string> targetNames;
+		public List<string> targetNames;
 		[JsonProperty(PropertyName = "Seperator", DefaultValueHandling = DefaultValueHandling.Populate)]
-		List<string> nameSeperator;
+		public List<string> nameSeperator;
 		[JsonProperty(Required = Required.AllowNull, PropertyName = "Alias")]
-		Dictionary<string, string> nameAliases;
+		public Dictionary<string, string> nameAliases;
 		[JsonProperty(Required = Required.Always)]
-		string rootDirectory { get; set; }
+		public string rootDirectory { get; set; }
 		[JsonProperty(Required = Required.Default, PropertyName = "Silent")]
-		bool silentTask 
+		public bool silentTask 
 		{ get; set; }
 		[JsonProperty(Required = Required.Default, PropertyName = "Log")]
-		string logFile
+		public string logFile
 		{ get; set; }
 
 		[JsonProperty (Required = Required.Default, PropertyName = "Vorlagen")]
-		Vorlagen vorlagen;	
+		public Vorlagen vorlagen;	
 
 		public DirectoryTask(string _jsonFile)
 		{
