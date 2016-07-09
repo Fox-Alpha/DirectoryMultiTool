@@ -52,6 +52,11 @@ namespace DirectoryMultiToolWF
 			}
 			//string output = JsonConvert.DeserializeObject<DirectoryTask> ();
 		}
+
+		private void beendenToolStripMenuItem_Click (object sender, EventArgs e)
+		{
+			Application.Exit ();
+		}
 	}
 
 	/* Klasse zum einlesen der JSON Konfiguration */
