@@ -76,14 +76,9 @@ namespace DirectoryMultiToolWF
 		[JsonProperty(Required = Required.Default, PropertyName = "Log")]
 		string logFile
 		{ get; set; }
-		// Templates
-		[JsonProperty (Required = Required.Default, PropertyName = "Source")]
-		string tplDirectory
-		{ get; set; }
-		[JsonProperty(Required = Required.Default, PropertyName = "Filter")]
-		List<string> tplFilter;
-		[JsonProperty(Required = Required.Default, PropertyName = "Files")]
-		List<string> tplFiles;
+
+		[JsonProperty (Required = Required.Default, PropertyName = "Vorlagen")]
+		Vorlagen vorlagen;	
 
 		public DirectoryTask(string _jsonFile)
 		{
@@ -101,6 +96,22 @@ namespace DirectoryMultiToolWF
 
                 //JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(jsonSerializerSettings);
 			}
+		}
+	}
+
+	public class Vorlagen
+	{
+		[JsonProperty (Required = Required.Default, PropertyName = "Source")]
+		string tplDirectory
+		{ get; set; }
+		[JsonProperty (Required = Required.Default, PropertyName = "Filter")]
+		List<string> tplFilter;
+		[JsonProperty (Required = Required.Default, PropertyName = "Files")]
+		List<string> tplFiles;
+
+		public Vorlagen ()
+		{
+
 		}
 	}
 }
