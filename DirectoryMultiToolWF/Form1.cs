@@ -42,13 +42,13 @@ namespace DirectoryMultiToolWF
 					{
 						//Log Datei schreiben das Verzeichnis noch nicht existierte
 						Debug.WriteLine ("Das Verzeichnis {0} wurde angelegt", dt.rootDirectory);
-						WriteToLogFile ("Das Zielverzeichnis wurde angelegt", dt.rootDirectory);
+						WriteToLogFile ("Das Zielverzeichnis {0} wurde angelegt", dt.rootDirectory);
 					}
 					Directory.CreateDirectory (dt.rootDirectory);
 				}
 				else
 				{
-					WriteToLogFile ("Das Zielverzeichnis ist bereit", dt.rootDirectory);
+					WriteToLogFile ("Das Zielverzeichnis {0} ist bereit", dt.rootDirectory);
 				}
 
 				//	Verzeichnisbaum zusammenbauen
@@ -73,14 +73,21 @@ namespace DirectoryMultiToolWF
 		{
 			foreach (string dir in dtree)
 			{
-				Directory.CreateDirectory (dt.rootDirectory + dir);
-				WriteToLogFile ("Das Zielverzeichnis wurde angelegt", dt.rootDirectory + dir);
+				if (!Directory.Exists (dt.rootDirectory + dir))
+				{
+					Directory.CreateDirectory (dt.rootDirectory + dir);
+					WriteToLogFile ("Das Zielverzeichnis {0} wurde angelegt", dt.rootDirectory + dir);
+				}
+				else
+				{
+					WriteToLogFile ("Das Zielverzeichnis {0} exitiert bereits", dt.rootDirectory + dir);
+				}
 			}
 		}
 
 		List<string> ExpandDirectoryList()
 		{
-			WriteToLogFile ("Erstellen der Verzeichnisbaumstruktur", dt.rootDirectory);
+			WriteToLogFile ("Erstellen der Verzeichnisbaumstruktur in {0}", dt.rootDirectory);
 			List<string> DirName = new List<string> ();
 			List<string> strTemp;
 			string dirTemp = "";
@@ -158,16 +165,18 @@ namespace DirectoryMultiToolWF
 			}
 		}
 
-		void WriteToLogFile(string Message, string AdditionalInfo)
+		void WriteToLogFile(string MessageFormat, params string[] vals)
 		{
 			if (!string.IsNullOrWhiteSpace (dt.logFile))
 			{
-				if (!File.Exists (dt.logFile))
+				using (StreamWriter sw = File.AppendText (dt.logFile))
 				{
-					using (StreamWriter sw = File.AppendText (dt.logFile))
+					if (vals.Length > 0)
 					{
-						sw.Write (string.Format ("{0}: {1} / {2}", DateTime.Now.ToString (), Message, AdditionalInfo));
+						sw.Write (string.Format ("{0}: {1}\r\n", DateTime.Now.ToString (), string.Format (MessageFormat, vals)));
 					}
+					else
+						sw.Write (string.Format ("{0}: {1}\r\n", DateTime.Now.ToString (), MessageFormat));
 				}
 			}
 		}
