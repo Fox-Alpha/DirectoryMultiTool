@@ -64,28 +64,34 @@ namespace DirectoryMultiToolWF
 		{
 			WriteToLogFile ("Erstellen der Verzeichnisbaumstruktur", dt.rootDirectory);
 			List<string> DirName = new List<string> ();
-			string [] strTemp;
+			List<string> strTemp;
 			string dirTemp = "";
 			string val;
 
 			if (dt.targetNames.Count > 0)
 			{
+				strTemp = new List<string> ();
 				foreach (string str in dt.targetNames)
 				{
-					strTemp = str.Split (dt.nameSeperator [0].ToCharArray ());
+					strTemp.Clear();
 
+					foreach(string sep in dt.nameSeperator)
+					{
+						strTemp.AddRange (str.Split (sep.ToCharArray ()));
+					}
+
+					dirTemp = "";
 					foreach (string split in strTemp)
 					{
-						dirTemp = "";
-						if (dt.nameAliases.ContainsValue(split))
+						if (dt.nameAliases.ContainsKey(split))
 						{
 							if (dt.nameAliases.TryGetValue (split, out val))
 							{
-								dirTemp += +Path.PathSeparator;
-								DirName.Add (dirTemp);
+								dirTemp += val+Path.DirectorySeparatorChar;
 							}
 						}
 					}
+					DirName.Add (dirTemp);
 				}
 			}
 		}
