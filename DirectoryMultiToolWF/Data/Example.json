@@ -38,6 +38,7 @@
 	"Vorlagen": {
 		/* Quellpfad der Dateien*/
 		"Source":"c:\\temp\\Vorlagen\\",
+		"OverwriteTarget":"True",
 		/* Dateifilter */
 		"Filter": [
 			"*.txt"
