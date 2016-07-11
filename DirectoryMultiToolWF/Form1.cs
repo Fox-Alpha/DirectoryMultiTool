@@ -23,6 +23,11 @@ namespace DirectoryMultiToolWF
 
 		public Form1 ()
 		{
+			InitializeComponent ();
+		}
+
+		private void Form1_Load (object sender, EventArgs e)
+		{
 			string [] cmdLine;
 
 			if ((cmdLine = Environment.GetCommandLineArgs()).Length > 1)
@@ -30,21 +35,70 @@ namespace DirectoryMultiToolWF
 				
 				ReadJSonKonfiguration (cmdLine[1]);
 
-				if (!dt.silentTask)
+				if (!Directory.Exists (dt.rootDirectory))
 				{
-					InitializeComponent ();
+					if (writeLog)
+					{
+						//Log Datei schreiben das Verzeichnis noch nicht existierte
+						Debug.WriteLine ("Das Verzeichnis {0} wurde angelegt", dt.rootDirectory);
+						WriteToLogFile ("Das Zielverzeichnis wurde angelegt", dt.rootDirectory);
+					}
+					Directory.CreateDirectory (dt.rootDirectory);
 				}
 				else
-					Debug.WriteLine ("Keine GUI Anzeige");
+				{
+					WriteToLogFile ("Das Zielverzeichnis ist bereit", dt.rootDirectory);
+				}
+
+				ExpandDirectoryList ();
+
+				//if (!dt.silentTask)
+				//{
+				//}
+				//else
+				//	Debug.WriteLine ("Keine GUI Anzeige");
 			}
 		}
 
-		private void Form1_Load (object sender, EventArgs e)
+		void ExpandDirectoryList()
 		{
+			WriteToLogFile ("Erstellen der Verzeichnisbaumstruktur", dt.rootDirectory);
+			List<string> DirName = new List<string> ();
+			string [] strTemp;
+			string dirTemp = "";
+			string val;
+
+			if (dt.targetNames.Count > 0)
+			{
+				foreach (string str in dt.targetNames)
+				{
+					strTemp = str.Split (dt.nameSeperator [0].ToCharArray ());
+
+					foreach (string split in strTemp)
+					{
+						dirTemp = "";
+						if (dt.nameAliases.ContainsValue(split))
+						{
+							if (dt.nameAliases.TryGetValue (split, out val))
+							{
+								dirTemp += +Path.PathSeparator;
+								DirName.Add (dirTemp);
+							}
+						}
+					}
+				}
+			}
 		}
 
 		private void ReadJSonKonfiguration(string JSonFile)
 		{
+			if (!File.Exists(JSonFile))
+			{
+				Debug.WriteLine ("Fehlende Angabe oder Angegebene Konfiguration ungültig.");
+				WriteToLogFile ("Fehlende Angabe oder Angegebene Konfiguration ungültig.", "");
+				return;
+			}
+
 			//	Setzen der Serializer Settings
 			JsonSerializerSettings jsonSerializerSettings;
 
@@ -60,7 +114,7 @@ namespace DirectoryMultiToolWF
 			//StreamWriter sw = new StreamWriter (@"data\exampleOut.json");
 			//JsonWriter writer = new JsonTextWriter (sw);
 
-			using (StreamReader sr = new StreamReader (@"data\example.json"))
+			using (StreamReader sr = new StreamReader (JSonFile))
 			{
 				using (JsonReader reader = new JsonTextReader (sr))
 				{
@@ -69,11 +123,24 @@ namespace DirectoryMultiToolWF
 					string output = JsonConvert.SerializeObject (dt, jsonSerializerSettings);
 					Debug.WriteLine (output);
 #endif
-					if (string.IsNullOrWhiteSpace (dt.logFile))
+					if (!string.IsNullOrWhiteSpace (dt.logFile))
 					{
-						if (!File.Exists (dt.logFile))
-							File.OpenWrite (dt.logFile).Close ();
 						writeLog = true;
+						WriteToLogFile ("Start Operations", "");
+					}
+				}
+			}
+		}
+
+		void WriteToLogFile(string Message, string AdditionalInfo)
+		{
+			if (!string.IsNullOrWhiteSpace (dt.logFile))
+			{
+				if (!File.Exists (dt.logFile))
+				{
+					using (StreamWriter sw = File.AppendText (dt.logFile))
+					{
+						sw.Write (string.Format ("{0}: {1} / {2}", DateTime.Now.ToString (), Message, AdditionalInfo));
 					}
 				}
 			}
