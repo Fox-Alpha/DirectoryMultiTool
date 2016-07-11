@@ -77,8 +77,6 @@ namespace DirectoryMultiToolWF
 			{
 				List<string> files = new List<string>();
 
-				string pattern = "";
-
 				foreach(string str in dt.vorlagen.tplFilter)
 				{
 					files.AddRange(Directory.GetFiles (dt.vorlagen.tplDirectory, str));
@@ -89,6 +87,7 @@ namespace DirectoryMultiToolWF
 					if (dt.vorlagen.OverwriteTpl)
 					{
 						File.Copy (file, target + Path.GetFileName (file), true);
+						WriteToLogFile ("Die Datei {0} wurde {1} kopiert", new string [] { file, target + file });
 					}
 					else
 						WriteToLogFile ("Die Datei {0} exitiert bereits", target + file);
