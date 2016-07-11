@@ -1,16 +1,16 @@
 ﻿{
 	/* Verzeichnisnamen die angelegt werden sollen*/
 	"Names": [
-		"OD-DB-WS-001",
-		"OD-DB-TB-001",
-		"OD-DB-TB-002",
-		"OD-DB-HY-001",
-		"OD-DB-VS-001",
-		"OD-DB-DC-001",
-		"OD-YW-WS-001",
-		"OD-YW-TB-001",
-		"OD-YW-HY-001",
-		"OD-SP-WS-001"
+		"OD-WS-DB-001",
+		"OD-TB-DB-001",
+		"OD-TB-DB-002",
+		"OD-HY-DB-001",
+		"OD-VS-DB-001",
+		"OD-DC-DB-001",
+		"OD-WS-YW-001",
+		"OD-TB-YW-001",
+		"OD-HY-YW-001",
+		"OD-WS-SP-001"
 	],
 
 	/* Aliase die als Verzeichnisbaum angelegt werden sollen */
