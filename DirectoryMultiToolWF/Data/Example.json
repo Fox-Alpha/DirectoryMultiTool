@@ -15,15 +15,15 @@
 
 	/* Aliase die als Verzeichnisbaum angelegt werden sollen */
 	"Alias": {
-		"Dirk":"DB",
-		"Yvonne":"YW",
-		"Sandro":"SP",
-		"Oldesloe":"OD",
-		"Workstation":"WS",
-		"Tablet":"TB",
-		"Handy":"HY",
-		"Docer":"DC",
-		"Virtual":"VS"
+		"DB":"Dirk",
+		"YW":"Yvonne",
+		"SP":"Sandro",
+		"OD":"Oldesloe",
+		"WS":"Workstation",
+		"TB":"Tablet",
+		"HY":"Handy",
+		"DC":"Docer",
+		"VS":"Virtual"
 	},
 
 	/* Trennzeichen zwischen den Namensteilen*/
