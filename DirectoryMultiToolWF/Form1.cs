@@ -195,6 +195,15 @@ namespace DirectoryMultiToolWF
 		{
 			if (!string.IsNullOrWhiteSpace (dt.logFile))
 			{
+				if(!dt.appenLog)
+				{
+					if (File.Exists(dt.logFile))
+					{
+						File.Delete (dt.logFile);
+						dt.appenLog = true;
+					}
+				}
+
 				using (StreamWriter sw = File.AppendText (dt.logFile))
 				{
 					if (vals.Length > 0)
@@ -232,8 +241,17 @@ namespace DirectoryMultiToolWF
 		[JsonProperty(Required = Required.Default, PropertyName = "Silent")]
 		public bool silentTask 
 		{ get; set; }
-		[JsonProperty(Required = Required.Default, PropertyName = "Log")]
+		[JsonProperty (Required = Required.Default, PropertyName = "AppendLog")]
+		public bool appenLog
+		{ get; set; }
+		[JsonProperty (Required = Required.Default, PropertyName = "Log")]
 		public string logFile
+		{ get; set; }
+		[JsonProperty (Required = Required.Default, PropertyName = "LogPrefix")]
+		public string logPrefix
+		{ get; set; }
+		[JsonProperty (Required = Required.Default, PropertyName = "LogSuffix")]
+		public string logSuffix
 		{ get; set; }
 
 		[JsonProperty (Required = Required.Default, PropertyName = "Vorlagen")]

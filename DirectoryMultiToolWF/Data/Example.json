@@ -53,7 +53,7 @@
 
 	/* Schreiben einer Logdatei, Pfad kann relativ zum RootDir sein '\\' oder zur Application .\\Data\\*/
 	"Log":"c:\\temp\\DirectoryMultiTool\\DirectoryMultiTool.Log.txt",
-	"AppendLog":"true",
+	"AppendLog":"false",
 	"LogSuffix":"",
 	"LogPrefix":""
 }
