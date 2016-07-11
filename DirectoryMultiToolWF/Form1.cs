@@ -35,6 +35,7 @@ namespace DirectoryMultiToolWF
 				
 				ReadJSonKonfiguration (cmdLine[1]);
 
+				//	Root des Zielverzeichnisses prüfen und bei bedarf anlegen
 				if (!Directory.Exists (dt.rootDirectory))
 				{
 					if (writeLog)
@@ -50,7 +51,15 @@ namespace DirectoryMultiToolWF
 					WriteToLogFile ("Das Zielverzeichnis ist bereit", dt.rootDirectory);
 				}
 
-				ExpandDirectoryList ();
+				//	Verzeichnisbaum zusammenbauen
+				List<string> expDirList;
+                if ((expDirList = ExpandDirectoryList ()) != null)
+				{
+					//	Verzeichnisse anlegen
+					CreateDirectoryTree (expDirList);
+				}
+
+
 
 				//if (!dt.silentTask)
 				//{
@@ -60,7 +69,16 @@ namespace DirectoryMultiToolWF
 			}
 		}
 
-		void ExpandDirectoryList()
+		void CreateDirectoryTree(List<string> dtree)
+		{
+			foreach (string dir in dtree)
+			{
+				Directory.CreateDirectory (dt.rootDirectory + dir);
+				WriteToLogFile ("Das Zielverzeichnis wurde angelegt", dt.rootDirectory + dir);
+			}
+		}
+
+		List<string> ExpandDirectoryList()
 		{
 			WriteToLogFile ("Erstellen der Verzeichnisbaumstruktur", dt.rootDirectory);
 			List<string> DirName = new List<string> ();
@@ -93,7 +111,9 @@ namespace DirectoryMultiToolWF
 					}
 					DirName.Add (dirTemp);
 				}
+				return DirName;
 			}
+			return null;
 		}
 
 		private void ReadJSonKonfiguration(string JSonFile)
