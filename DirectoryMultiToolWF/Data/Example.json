@@ -51,7 +51,7 @@
 	"Silent":"false",
 
 	/* Schreiben einer Logdatei, Pfad kann relativ zum RootDir sein '\\' oder zur Application .\\Data\\*/
-	"Log":"\\Log\\MultiDirectoryTool.Log.txt"
+	"Log":"c:\\temp\\DirectoryMultiTool\\DirectoryMultiTool.Log.txt"
 }
 
 
@@ -63,6 +63,6 @@
 	"Files":null,
 	"rootDirectory":"c:\\temp\\DirectoryMultiTool\\",
 	"Silent":false,
-	"Log":"c:\\Log\\MultiDirectoryTool.Log.txt",
+	"Log":"c:\\temp\\MDirectoryultiTool\\DirectoryMultiTool.Log.txt",
 	"Source":null
 }
