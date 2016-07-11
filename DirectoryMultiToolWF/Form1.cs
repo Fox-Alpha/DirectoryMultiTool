@@ -59,8 +59,10 @@ namespace DirectoryMultiToolWF
 					CreateDirectoryTree (expDirList);
 				}
 
-
-
+				foreach (string str in expDirList)
+				{
+					CopyTemplateFiles (dt.rootDirectory + str);
+				}
 				//if (!dt.silentTask)
 				//{
 				//}
@@ -69,7 +71,32 @@ namespace DirectoryMultiToolWF
 			}
 		}
 
-		void CreateDirectoryTree(List<string> dtree)
+        void CopyTemplateFiles (string target)
+		{
+			if(Directory.Exists(dt.vorlagen.tplDirectory) && !string.IsNullOrWhiteSpace(target))
+			{
+				List<string> files = new List<string>();
+
+				string pattern = "";
+
+				foreach(string str in dt.vorlagen.tplFilter)
+				{
+					files.AddRange(Directory.GetFiles (dt.vorlagen.tplDirectory, str));
+				}			
+
+				foreach (string file in files)
+				{
+					if (dt.vorlagen.OverwriteTpl)
+					{
+						File.Copy (file, target + Path.GetFileName (file), true);
+					}
+					else
+						WriteToLogFile ("Die Datei {0} exitiert bereits", target + file);
+				}
+			}
+		}
+
+		void CreateDirectoryTree (List<string> dtree)
 		{
 			foreach (string dir in dtree)
 			{
@@ -235,12 +262,14 @@ namespace DirectoryMultiToolWF
 	public class Vorlagen
 	{
 		[JsonProperty (Required = Required.Default, PropertyName = "Source")]
-		string tplDirectory
+		public string tplDirectory
 		{ get; set; }
 		[JsonProperty (Required = Required.Default, PropertyName = "Filter")]
-		List<string> tplFilter;
+		public List<string> tplFilter;
 		[JsonProperty (Required = Required.Default, PropertyName = "Files")]
-		List<string> tplFiles;
+		public List<string> tplFiles;
+		[JsonProperty (Required = Required.Default, PropertyName = "OverwriteTarget")]
+		public bool OverwriteTpl;
 
 		public Vorlagen ()
 		{
