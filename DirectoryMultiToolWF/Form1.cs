@@ -73,14 +73,31 @@ namespace DirectoryMultiToolWF
 
         void CopyTemplateFiles (string target)
 		{
-			if(Directory.Exists(dt.vorlagen.tplDirectory) && !string.IsNullOrWhiteSpace(target))
+        	string tplDirectory = dt.vorlagen.tplDirectory;
+        	string currDir = Directory.GetCurrentDirectory();
+        	
+        	// Relatriven Pfad zur Anwendung nutzen
+        	if (!dt.vorlagen.isRelativRoot && Path.IsPathRooted(tplDirectory)) {
+        		tplDirectory = PathUtil.GetRelativePath(dt.vorlagen.tplDirectory, currDir);
+        	}
+        	//	Relativen Pfad zum RootDirectory nutzen
+        	else if (dt.vorlagen.isRelativRoot && Path.IsPathRooted(tplDirectory))
+        	{
+        		tplDirectory = PathUtil.GetRelativePath(dt.vorlagen.tplDirectory, dt.rootDirectory);
+        	}
+        	
+			if(Directory.Exists(tplDirectory) && !string.IsNullOrWhiteSpace(target))
 			{
 				List<string> files = new List<string>();
 
 				foreach(string str in dt.vorlagen.tplFilter)
 				{
-					files.AddRange(Directory.GetFiles (dt.vorlagen.tplDirectory, str));
+					files.AddRange(Directory.GetFiles (tplDirectory, str));
 				}			
+				
+				if (dt.vorlagen.tplFiles.Count > 0) {
+					files.AddRange(dt.vorlagen.tplFiles.ToArray());
+				}
 
 				foreach (string file in files)
 				{
@@ -326,14 +343,15 @@ namespace DirectoryMultiToolWF
 	public class Vorlagen
 	{
 		[JsonProperty (Required = Required.Default, PropertyName = "Source")]
-		public string tplDirectory
-		{ get; set; }
+		public string tplDirectory { get; set; }
+		[JsonProperty (Required = Required.Default, PropertyName = "IsRelativRoot")]
+		public bool isRelativRoot { get; set; }
 		[JsonProperty (Required = Required.Default, PropertyName = "Filter")]
 		public List<string> tplFilter;
 		[JsonProperty (Required = Required.Default, PropertyName = "Files")]
 		public List<string> tplFiles;
 		[JsonProperty (Required = Required.Default, PropertyName = "OverwriteTarget")]
-		public bool OverwriteTpl;
+		public bool OverwriteTpl { get; set; }
 
 		public Vorlagen ()
 		{
