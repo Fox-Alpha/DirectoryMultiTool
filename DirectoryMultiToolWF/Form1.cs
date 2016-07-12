@@ -85,6 +85,8 @@ namespace DirectoryMultiToolWF
         	{
         		tplDirectory = PathUtil.GetRelativePath(dt.vorlagen.tplDirectory, dt.rootDirectory);
         	}
+        	else
+        		tplDirectory = dt.rootDirectory + tplDirectory;
         	
 			if(Directory.Exists(tplDirectory) && !string.IsNullOrWhiteSpace(target))
 			{
@@ -105,6 +107,9 @@ namespace DirectoryMultiToolWF
 					{
 						File.Copy (file, target + Path.GetFileName (file), true);
 						WriteToLogFile ("Die Datei {0} wurde {1} kopiert", new string [] { file, target + file });
+					}
+					else if (!File.Exists(target + Path.GetFileName (file))) {
+						File.Copy (file, target + Path.GetFileName (file), false);
 					}
 					else
 						WriteToLogFile ("Die Datei {0} exitiert bereits", target + file);
@@ -135,15 +140,21 @@ namespace DirectoryMultiToolWF
 			List<string> strTemp;
 			string dirTemp = "";
 			string val;
+			
+			string nameFileDir = Path.GetDirectoryName(dt.nameFile);
 
 			if (dt.useNameFile && !string.IsNullOrWhiteSpace(dt.nameFile)) {
 				if (File.Exists(dt.nameFile))
 				{
-					if(!Path.IsPathRooted(Path.GetDirectoryName(dt.nameFile))) {
-						//
-					}
-					else
-						dt.nameFile = PathUtil.GetRelativePath(Path.GetDirectoryName(dt.nameFile), Directory.GetCurrentDirectory(), true);
+//					if(!Path.IsPathRooted(nameFileDir)) {
+//						//
+//						Debug.WriteLine("Pfad {0} hat kein Root", nameFileDir);
+//					}
+					//else if (dt.nameFile) {
+						
+					//}
+//					else
+//						dt.nameFile = PathUtil.GetRelativePath(Path.GetDirectoryName(dt.nameFile), Directory.GetCurrentDirectory(), true);
 					
 					List<string> nameList = new List<string>();
 					string[] listTemp = File.ReadAllLines(dt.nameFile);
@@ -427,5 +438,18 @@ namespace DirectoryMultiToolWF
 
             return newPath;
         }
+        
+		public static bool IsValidPath(string input)
+		{
+			try
+			{
+				var info = new FileInfo(input);
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+			return true;
+		}
     }
 }
