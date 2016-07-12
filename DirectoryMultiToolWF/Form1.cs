@@ -142,6 +142,10 @@ namespace DirectoryMultiToolWF
 							}
 						}
 					}
+					
+					if(dt.createNameDir)
+						dirTemp += str+Path.DirectorySeparatorChar;
+					
 					DirName.Add (dirTemp);
 				}
 				return DirName;
