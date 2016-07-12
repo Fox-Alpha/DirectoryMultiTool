@@ -3,6 +3,7 @@
 	"Names": [
 	],
 	"CreateNameDir":"true",
+	/* Überschreibt die Namens Liste mit den Werten aus der Datei */
 	"UseNameFile":"True",
 	"NameFile":"Data\\ac_win_hostliste_bereinigt.txt",
 
@@ -30,7 +31,10 @@
 	/* Dateien die in jedes erzeugte Zielverzeichnis kopiert werden sollen */
 	"Vorlagen": {
 		/* Quellpfad der Dateien*/
-		"Source":"c:\\temp\\Vorlagen\\",
+		"Source":"Data\\Vorlagen\\",
+		/* Gibt an ob der Pfad relativ zum 'RootDirectory' angegeben wurde */
+		/* Bei 'False' wird ein relativer Pfad zur Anwendung verwendet */
+		"IsRelativRoot":"false",
 		"OverwriteTarget":"True",
 		/* Dateifilter */
 		"Filter": [
