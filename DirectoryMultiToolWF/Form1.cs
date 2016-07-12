@@ -236,36 +236,39 @@ namespace DirectoryMultiToolWF
 
 		[JsonProperty (PropertyName = "Names", Required = Required.Always)] 
 		public List<string> targetNames;
+		
 		[JsonProperty (Required = Required.Default, PropertyName = "CreateNameDir")]
-		public bool createNameDir
-		{ get; set; }
+		public bool createNameDir { get; set; }
+		
 		[JsonProperty (Required = Required.Default, PropertyName = "UseNameFile")]
-		public bool useNameFile
-		{ get; set; }
+		public bool useNameFile { get; set; }
+		
 		[JsonProperty (Required = Required.Default, PropertyName = "NameFile")]
-		public string nameFile
-		{ get; set; }
+		public string nameFile { get; set; }
+		
 		[JsonProperty(PropertyName = "Seperator", DefaultValueHandling = DefaultValueHandling.Populate)]
 		public List<string> nameSeperator;
+		
 		[JsonProperty(Required = Required.AllowNull, PropertyName = "Alias")]
 		public Dictionary<string, string> nameAliases;
+		
 		[JsonProperty(Required = Required.Always)]
 		public string rootDirectory { get; set; }
+		
 		[JsonProperty(Required = Required.Default, PropertyName = "Silent")]
-		public bool silentTask 
-		{ get; set; }
+		public bool silentTask { get; set; }
+		
 		[JsonProperty (Required = Required.Default, PropertyName = "AppendLog")]
-		public bool appenLog
-		{ get; set; }
+		public bool appenLog { get; set; }
+		
 		[JsonProperty (Required = Required.Default, PropertyName = "Log")]
-		public string logFile
-		{ get; set; }
+		public string logFile { get; set; }
+		
 		[JsonProperty (Required = Required.Default, PropertyName = "LogPrefix")]
-		public string logPrefix
-		{ get; set; }
+		public string logPrefix { get; set; }
+		
 		[JsonProperty (Required = Required.Default, PropertyName = "LogSuffix")]
-		public string logSuffix
-		{ get; set; }
+		public string logSuffix { get; set; }
 
 		[JsonProperty (Required = Required.Default, PropertyName = "Vorlagen")]
 		public Vorlagen vorlagen;	
