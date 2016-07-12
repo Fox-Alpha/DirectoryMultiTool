@@ -1,0 +1,52 @@
+﻿{
+	/* Verzeichnisnamen die angelegt werden sollen*/
+	"Names": [
+	],
+	"CreateNameDir":"true",
+	"UseNameFile":"True",
+	"NameFile":"Data\\ac_win_hostliste_bereinigt.txt",
+
+	/* Aliase die als Verzeichnisbaum angelegt werden sollen */
+	"Alias": {
+		"Berlin":"BE",
+		"Dortmund":"DO",
+		"Frankfurt":"FR",
+		"Bremen":"HB",
+		"Hamburg":"HH",
+		"Köln":"KO",
+		"München":"MU",
+		"Oberhausen":"OB",
+		"Stuttgart":"ST",
+	},
+
+	/* Trennzeichen zwischen den Namensteilen*/
+	"Seperator": [
+		"-"
+	],
+
+	/* Verzeichnis in dem der Baum angelegt werden soll*/
+	"RootDirectory":"c:\\temp\\DirectoryMultiTool\\",
+
+	/* Dateien die in jedes erzeugte Zielverzeichnis kopiert werden sollen */
+	"Vorlagen": {
+		/* Quellpfad der Dateien*/
+		"Source":"c:\\temp\\Vorlagen\\",
+		"OverwriteTarget":"True",
+		/* Dateifilter */
+		"Filter": [
+			"*.txt"
+		],
+		/* Oder Dateiliste */
+		"Files": [
+		]
+	},
+
+	/* Soll die Ausführung ohne GUI geschehen */
+	"Silent":"false",
+
+	/* Schreiben einer Logdatei, Pfad kann relativ zum RootDir sein '\\' oder zur Application .\\Data\\*/
+	"Log":"c:\\temp\\DirectoryMultiTool\\DirectoryMultiTool.Log.txt",
+	"AppendLog":"false",
+	"LogSuffix":"",
+	"LogPrefix":""
+}
