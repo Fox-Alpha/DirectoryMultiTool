@@ -8,15 +8,15 @@
 
 	/* Aliase die als Verzeichnisbaum angelegt werden sollen */
 	"Alias": {
-		"Berlin":"BE",
-		"Dortmund":"DO",
-		"Frankfurt":"FR",
-		"Bremen":"HB",
-		"Hamburg":"HH",
-		"Köln":"KO",
-		"München":"MU",
-		"Oberhausen":"OB",
-		"Stuttgart":"ST",
+		"BE":"Berlin",
+		"DO":"Dortmund",
+		"FR":"Frankfurt",
+		"HB":"Bremen",
+		"HH":"Hamburg",
+		"KO":"Köln",
+		"MU":"München",
+		"OB":"Oberhausen",
+		"ST":"Stuttgart",
 	},
 
 	/* Trennzeichen zwischen den Namensteilen*/
