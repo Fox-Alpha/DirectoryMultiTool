@@ -13,6 +13,7 @@
 		"OD-WS-SP-001"
 	],
 	"CreateNameDir":"true",
+	/* Überschreibt die Namens Liste mit den Werten aus der Datei */
 	"UseNameFile":"False",
 	"NameFile":"",
 
@@ -42,6 +43,9 @@
 		/* Quellpfad der Dateien*/
 		"Source":"c:\\temp\\Vorlagen\\",
 		"OverwriteTarget":"True",
+		/* Gibt an ob der Pfad relativ zum 'RootDirectory' angegeben wurde */
+		/* Bei 'False' wird ein relativer Pfad zur Anwendung verwendet */
+		"IsRelativRoot":"false",
 		/* Dateifilter */
 		"Filter": [
 			"*.txt"
@@ -57,6 +61,8 @@
 	/* Schreiben einer Logdatei, Pfad kann relativ zum RootDir sein '\\' oder zur Application .\\Data\\*/
 	"Log":"c:\\temp\\DirectoryMultiTool\\DirectoryMultiTool.Log.txt",
 	"AppendLog":"false",
+	
+	/* Noch nicht implementiert */
 	"LogSuffix":"",
 	"LogPrefix":""
 }
