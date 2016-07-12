@@ -12,6 +12,9 @@
 		"OD-HY-YW-001",
 		"OD-WS-SP-001"
 	],
+	"CreateNameDir":"true",
+	"UseNameFile":"False",
+	"NameFile":"",
 
 	/* Aliase die als Verzeichnisbaum angelegt werden sollen */
 	"Alias": {

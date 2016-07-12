@@ -232,6 +232,15 @@ namespace DirectoryMultiToolWF
 
 		[JsonProperty (PropertyName = "Names", Required = Required.Always)] 
 		public List<string> targetNames;
+		[JsonProperty (Required = Required.Default, PropertyName = "CreateNameDir")]
+		public bool createNameDir
+		{ get; set; }
+		[JsonProperty (Required = Required.Default, PropertyName = "UseNameFile")]
+		public bool useNameFile
+		{ get; set; }
+		[JsonProperty (Required = Required.Default, PropertyName = "NameFile")]
+		public string nameFile
+		{ get; set; }
 		[JsonProperty(PropertyName = "Seperator", DefaultValueHandling = DefaultValueHandling.Populate)]
 		public List<string> nameSeperator;
 		[JsonProperty(Required = Required.AllowNull, PropertyName = "Alias")]
