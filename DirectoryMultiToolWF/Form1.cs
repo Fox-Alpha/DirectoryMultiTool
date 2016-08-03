@@ -143,7 +143,8 @@ namespace DirectoryMultiToolWF
 			
 			string nameFileDir = Path.GetDirectoryName(dt.nameFile);
 
-			if (dt.useNameFile && !string.IsNullOrWhiteSpace(dt.nameFile)) {
+			if (dt.useNameFile && !string.IsNullOrWhiteSpace(dt.nameFile)) 
+			{
 				if (File.Exists(dt.nameFile))
 				{
 //					if(!Path.IsPathRooted(nameFileDir)) {
@@ -159,7 +160,8 @@ namespace DirectoryMultiToolWF
 					List<string> nameList = new List<string>();
 					string[] listTemp = File.ReadAllLines(dt.nameFile);
 
-					if (listTemp.Length > 0) {
+					if (listTemp.Length > 0) 
+					{
 						//	Bereinigen der Datei von Leerzeilen
 						foreach (var line in listTemp) {
 							if (!string.IsNullOrWhiteSpace(line)) {
